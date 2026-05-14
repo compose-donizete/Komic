@@ -1,4 +1,4 @@
-package compose.project.demo.composedemo
+package com.dv.apps.komic
 
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone

@@ -1,4 +1,4 @@
-rootProject.name = "composedemo"
+rootProject.name = "Komic"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

@@ -1,4 +1,4 @@
-package compose.project.demo.composedemo
+package com.dv.apps.komic
 
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp

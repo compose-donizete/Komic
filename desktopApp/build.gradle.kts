@@ -17,11 +17,11 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "compose.project.demo.composedemo.MainKt"
+        mainClass = "com.dv.apps.komic.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "compose.project.demo.composedemo"
+            packageName = "com.dv.apps.komic"
             packageVersion = "1.0.0"
         }
     }

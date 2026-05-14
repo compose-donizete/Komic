@@ -21,11 +21,11 @@ kotlin {
 }
 
 android {
-    namespace = "compose.project.demo.composedemo"
+    namespace = "com.dv.apps.komic"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "compose.project.demo.composedemo"
+        applicationId = "com.dv.apps.komic"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

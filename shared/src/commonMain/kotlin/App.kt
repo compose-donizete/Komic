@@ -1,4 +1,4 @@
-package compose.project.demo.composedemo
+package com.dv.apps.komic
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -11,12 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import composedemo.shared.generated.resources.Res
-import composedemo.shared.generated.resources.eg
-import composedemo.shared.generated.resources.fr
-import composedemo.shared.generated.resources.id
-import composedemo.shared.generated.resources.jp
-import composedemo.shared.generated.resources.mx
+import komic.shared.generated.resources.*
 import kotlinx.datetime.TimeZone
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource

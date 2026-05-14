@@ -1,4 +1,4 @@
-package compose.project.demo.composedemo
+package com.dv.apps.komic
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
