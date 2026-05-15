@@ -1,80 +1,74 @@
 package com.dv.apps.komic
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.rememberNavigationSuiteScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import komic.shared.generated.resources.*
-import kotlinx.datetime.TimeZone
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
-
-data class Country(val name: String, val zone: TimeZone, val image: DrawableResource)
-
-val defaultCountries = listOf(
-    Country("Japan", TimeZone.of("Asia/Tokyo"), Res.drawable.jp),
-    Country("France", TimeZone.of("Europe/Paris"), Res.drawable.fr),
-    Country("Mexico", TimeZone.of("America/Mexico_City"), Res.drawable.mx),
-    Country("Indonesia", TimeZone.of("Asia/Jakarta"), Res.drawable.id),
-    Country("Egypt", TimeZone.of("Africa/Cairo"), Res.drawable.eg)
-)
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        var showCountries by remember { mutableStateOf(false) }
-        var timeAtLocation by remember { mutableStateOf("No location selected") }
+    val state = rememberNavigationSuiteScaffoldState()
+    val stack = mutableStateListOf(Destination.HOME)
 
-        Column(
-            modifier = Modifier
-                .padding(20.dp)
-                .safeContentPadding()
-                .fillMaxSize(),
-        ) {
-            Text(
-                timeAtLocation,
-                style = TextStyle(fontSize = 20.sp),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
-            )
-            Row(modifier = Modifier.padding(start = 20.dp, top = 10.dp)) {
-                DropdownMenu(
-                    expanded = showCountries,
-                    onDismissRequest = { showCountries = false }
-                ) {
-                    defaultCountries.forEach { (name, zone, image) ->
-                        DropdownMenuItem(
-                            text = {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Image(
-                                        painterResource(image),
-                                        modifier = Modifier.size(50.dp).padding(end = 10.dp),
-                                        contentDescription = "$name flag"
-                                    )
-                                    Text(name)
+    NavigationSuiteScaffold(
+        state = state,
+        navigationSuiteItems = {
+            Destination.entries.forEach { destination ->
+                item(
+                    selected = stack.single() == destination,
+                    onClick = { stack.fill(destination) },
+                    icon = {
+                        Icon(
+                            painterResource(
+                                if (stack.single() == destination) {
+                                    destination.selectedIcon
+                                } else {
+                                    destination.icon
                                 }
-                            },
-                            onClick = {
-                                timeAtLocation = currentTimeAt(name, zone)
-                                showCountries = false
-                            }
+                            ),
+                            contentDescription = stringResource(destination.title)
                         )
-                    }
-                }
-            }
-            Button(
-                modifier = Modifier.padding(start = 20.dp, top = 10.dp),
-                onClick = { showCountries = !showCountries }) {
-                Text("Select Location")
+                    },
+                    label = { Text(destination.name) }
+                )
             }
         }
+    ) {
+        MaterialTheme {
+            NavDisplay(
+                stack,
+                entryProvider = entryProvider {
+                    entry<Destination> {
+                        when (it) {
+                            Destination.HOME -> Text("HOME")
+                            Destination.SHELF -> Text("SHELF")
+                            Destination.SETTINGS -> Text("SETTINGS")
+                        }
+                    }
+                }
+            )
+        }
     }
+}
+
+enum class Destination(
+    val title: StringResource,
+    val icon: DrawableResource,
+    val selectedIcon: DrawableResource
+) {
+    HOME(Res.string.menu_home, Res.drawable.ic_home, Res.drawable.ic_home_filled),
+    SHELF(Res.string.menu_shelf, Res.drawable.ic_shelf, Res.drawable.ic_shelf_filled),
+    SETTINGS(Res.string.menu_settings, Res.drawable.ic_settings, Res.drawable.ic_settings_filled)
 }
