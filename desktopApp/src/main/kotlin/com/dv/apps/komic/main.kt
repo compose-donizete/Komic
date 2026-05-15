@@ -13,7 +13,7 @@ fun main() = application {
         position = WindowPosition(300.dp, 300.dp)
     )
     Window(
-        title = "Local Time App",
+        title = "Komic",
         onCloseRequest = ::exitApplication,
         state = state,
         alwaysOnTop = true
