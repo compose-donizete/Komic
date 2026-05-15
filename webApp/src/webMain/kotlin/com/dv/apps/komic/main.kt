@@ -14,6 +14,6 @@ private val jsJodaTz = JsJodaTimeZoneModule
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     ComposeViewport {
-        App()
+        App(Unit)
     }
 }

@@ -18,6 +18,6 @@ fun main() = application {
         state = state,
         alwaysOnTop = true
     ) {
-        App()
+        App(window)
     }
 }

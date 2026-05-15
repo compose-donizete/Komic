@@ -10,6 +10,12 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-Xexpect-actual-classes",
+        )
+    }
+
     androidLibrary {
         namespace = "com.dv.apps.komic.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
