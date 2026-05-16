@@ -1,19 +1,15 @@
 package com.dv.apps.komic
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.rememberNavigationSuiteScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.dv.apps.komic.feature.Settings
+import com.dv.apps.komic.feature.settings.SettingsScreen
 import komic.shared.generated.resources.*
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -54,20 +50,8 @@ fun Navigation() {
                 entry<Destination> {
                     when (it) {
                         Destination.HOME -> Text("HOME")
-                        Destination.SHELF -> Column {
-                            val co = rememberCoroutineScope()
-                            val folderPicker = LocalFolderPicker.current
-
-                            Button(onClick = {
-                                co.launch {
-                                    val folder = folderPicker()
-                                    println(folder)
-                                }
-                            }) {
-                                Text("Click me")
-                            }
-                        }
-                        Destination.SETTINGS -> Settings()
+                        Destination.SHELF -> Text("SHELF")
+                        Destination.SETTINGS -> SettingsScreen()
                     }
                 }
             }

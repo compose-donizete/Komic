@@ -5,7 +5,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 
 val LocalFolderPicker = staticCompositionLocalOf<suspend () -> String?> {
-    error("FolderPicker not initialized")
+    {
+        error("FolderPicker not initialized")
+    }
 }
 
 @Composable
