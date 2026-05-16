@@ -5,7 +5,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.channels.Channel
 
-
 actual typealias Window = android.app.Activity
 
 @Composable

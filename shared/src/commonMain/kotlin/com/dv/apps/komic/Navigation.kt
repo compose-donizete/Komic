@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.dv.apps.komic.feature.Settings
 import komic.shared.generated.resources.*
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
@@ -53,8 +54,7 @@ fun Navigation() {
                 entry<Destination> {
                     when (it) {
                         Destination.HOME -> Text("HOME")
-                        Destination.SHELF -> Text("SHELF")
-                        Destination.SETTINGS -> Column {
+                        Destination.SHELF -> Column {
                             val co = rememberCoroutineScope()
                             val folderPicker = LocalFolderPicker.current
 
@@ -67,6 +67,7 @@ fun Navigation() {
                                 Text("Click me")
                             }
                         }
+                        Destination.SETTINGS -> Settings()
                     }
                 }
             }
