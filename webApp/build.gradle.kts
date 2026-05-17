@@ -25,7 +25,7 @@ kotlin {
 
             implementation(libs.compose.ui)
 
-            implementation(npm("sqlite-worker", layout.projectDirectory.dir("worker").asFile))
+            implementation(npm("sqlite-web-worker", layout.projectDirectory.dir("sqlite-web-worker").asFile))
         }
     }
 }
