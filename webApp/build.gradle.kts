@@ -24,7 +24,8 @@ kotlin {
             implementation(projects.shared)
 
             implementation(libs.compose.ui)
-            implementation(npm("@js-joda/timezone", "2.22.0"))
+
+            implementation(npm("sqlite-worker", layout.projectDirectory.dir("worker").asFile))
         }
     }
 }

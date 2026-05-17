@@ -18,6 +18,11 @@ kotlinx-datetime = "0.8.0"
 
 koin = "4.2.1"
 koinCompiler = "1.0.0-RC2"
+
+room = "3.0.0-alpha04"
+sqlite = "2.7.0-alpha04"
+ksp = "2.3.8"
+
 navigation3 = "1.1.1"
 navigation3AdaptativeNavigationSuite = "1.9.0"
 
@@ -48,6 +53,11 @@ koin-android = { module = "io.insert-koin:koin-android" }
 koin-compose = { module = "io.insert-koin:koin-compose" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+sqlite-web = { module = "androidx.sqlite:sqlite-web", version.ref = "sqlite" }
+room-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room" }
+
 navigation3-core = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 navigation3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "navigation3AdaptativeNavigationSuite" }
 
@@ -65,3 +75,5 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 koinCompiler = { id = "io.insert-koin.compiler.plugin", version.ref = "koinCompiler" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+roomCompiler = { id = "androidx.room3", version.ref = "room" }

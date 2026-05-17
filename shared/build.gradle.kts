@@ -7,7 +7,9 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.koinCompiler)
+    alias(libs.plugins.roomCompiler)
 }
 
 kotlin {
@@ -79,5 +81,16 @@ kotlin {
 }
 
 dependencies {
+    add("jvmMainImplementation", libs.sqlite.bundled)
+    add("jsMainApi", libs.sqlite.web)
+    add("wasmJsMainApi", libs.sqlite.web)
+
+    commonMainApi(libs.room.runtime)
+    ksp(libs.room.compiler)
+
     androidRuntimeClasspath(libs.compose.uiTooling)
+}
+
+room3 {
+    schemaDirectory("$projectDir/schemas")
 }
