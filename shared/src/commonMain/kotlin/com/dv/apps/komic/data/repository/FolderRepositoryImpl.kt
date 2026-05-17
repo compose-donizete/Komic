@@ -2,13 +2,13 @@ package com.dv.apps.komic.data.repository
 
 import com.dv.apps.komic.data.room.settings.folder.FolderDao
 import com.dv.apps.komic.data.room.settings.folder.FolderEntity
-import com.dv.apps.komic.domain.repository.SettingsRepository
+import com.dv.apps.komic.domain.repository.FolderRepository
 import kotlinx.coroutines.flow.map
 
-class SettingsRepositoryImpl(
+class FolderRepositoryImpl(
     private val folderDao: FolderDao
-) : SettingsRepository {
-    override suspend fun addFolder(path: String) {
+) : FolderRepository {
+    override suspend fun add(path: String) {
         val entity = FolderEntity(
             id = 0,
             path
@@ -16,11 +16,11 @@ class SettingsRepositoryImpl(
         folderDao.insert(entity)
     }
 
-    override fun getFolders() = folderDao.get().map {
+    override fun get() = folderDao.get().map {
         it.map(FolderEntity::path)
     }
 
-    override suspend fun deleteFolder(path: String) {
+    override suspend fun delete(path: String) {
         folderDao.delete(path)
     }
 }

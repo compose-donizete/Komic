@@ -1,9 +1,9 @@
 package com.dv.apps.komic.di
 
-import com.dv.apps.komic.data.repository.SettingsRepositoryImpl
+import com.dv.apps.komic.data.repository.FolderRepositoryImpl
 import com.dv.apps.komic.data.room.AppDatabase
 import com.dv.apps.komic.data.room.AppDatabaseBuilder
-import com.dv.apps.komic.domain.repository.SettingsRepository
+import com.dv.apps.komic.domain.repository.FolderRepository
 import com.dv.apps.komic.feature.settings.folder.FolderSourceSettingsSectionViewModel
 import com.dv.apps.komic.feature.settings.preview.PreviewSettingsSectionViewModel
 import org.koin.core.module.Module
@@ -22,7 +22,7 @@ val roomModule = module {
 }
 
 val repositoryModule = module {
-    single<SettingsRepositoryImpl>() bind SettingsRepository::class
+    single<FolderRepositoryImpl>() bind FolderRepository::class
 }
 
 val viewModelModule = module {

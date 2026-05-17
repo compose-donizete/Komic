@@ -2,7 +2,7 @@ package com.dv.apps.komic.feature.settings.folder
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dv.apps.komic.domain.repository.SettingsRepository
+import com.dv.apps.komic.domain.repository.FolderRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -16,13 +16,13 @@ sealed interface Intent {
 }
 
 class FolderSourceSettingsSectionViewModel(
-    private val settingsRepository: SettingsRepository
+    private val folderRepository: FolderRepository
 ) : ViewModel() {
     private val isLoading = MutableStateFlow(0)
 
     val state = combine(
         isLoading.map { it > 0 },
-        settingsRepository.getFolders(),
+        folderRepository.get(),
         ::State
     ).stateIn(viewModelScope, SharingStarted.Eagerly, State())
 
@@ -34,7 +34,7 @@ class FolderSourceSettingsSectionViewModel(
 
     private fun onFileTreeSelected(path: String) {
         launch {
-            settingsRepository.addFolder(path)
+            folderRepository.add(path)
         }
     }
 
