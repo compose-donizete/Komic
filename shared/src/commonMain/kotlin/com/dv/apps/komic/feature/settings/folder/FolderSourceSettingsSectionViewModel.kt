@@ -2,13 +2,14 @@ package com.dv.apps.komic.feature.settings.folder
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dv.apps.komic.domain.repository.FolderRepository
+import com.dv.apps.komic.domain.model.FolderSettings
+import com.dv.apps.komic.domain.repository.FolderSettingsRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 data class State(
     val isLoading: Boolean = false,
-    val selectedFolders: List<String> = emptyList()
+    val folderSettings: FolderSettings = FolderSettings()
 )
 
 sealed interface Intent {
@@ -16,15 +17,15 @@ sealed interface Intent {
 }
 
 class FolderSourceSettingsSectionViewModel(
-    private val folderRepository: FolderRepository
+    private val folderSettingsRepository: FolderSettingsRepository
 ) : ViewModel() {
     private val isLoading = MutableStateFlow(0)
 
     val state = combine(
         isLoading.map { it > 0 },
-        folderRepository.get(),
+        folderSettingsRepository.get(),
         ::State
-    ).stateIn(viewModelScope, SharingStarted.Eagerly, State())
+    ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), State())
 
     fun handleIntent(intent: Intent) {
         when (intent) {
@@ -34,7 +35,7 @@ class FolderSourceSettingsSectionViewModel(
 
     private fun onFileTreeSelected(path: String) {
         launch {
-            folderRepository.add(path)
+            folderSettingsRepository.add(path)
         }
     }
 

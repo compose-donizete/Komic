@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dv.apps.komic.KomicTheme
+import com.dv.apps.komic.domain.model.PreviewSettings
 import com.dv.apps.komic.feature.settings.SettingsSection
 import komic.shared.generated.resources.*
 import org.jetbrains.compose.resources.DrawableResource
@@ -68,8 +69,8 @@ fun PreviewSettingsSection(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = {
                     dispatchIntent(
-                        Intent.OnVerticalPreviewSpanSizeChanged(
-                            state.verticalPreviewSpanSize - 1
+                        Intent.OnVerticalCountChanged(
+                            state.previewSettings.verticalCount - 1
                         )
                     )
                 }) {
@@ -78,11 +79,11 @@ fun PreviewSettingsSection(
                         contentDescription = ""
                     )
                 }
-                Text("${state.verticalPreviewSpanSize}")
+                Text("${state.previewSettings.verticalCount}")
                 IconButton(onClick = {
                     dispatchIntent(
-                        Intent.OnVerticalPreviewSpanSizeChanged(
-                            state.verticalPreviewSpanSize + 1
+                        Intent.OnVerticalCountChanged(
+                            state.previewSettings.verticalCount + 1
                         )
                     )
                 }) {
@@ -105,8 +106,8 @@ fun PreviewSettingsSection(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = {
                     dispatchIntent(
-                        Intent.OnHorizontalPreviewSpanSizeChanged(
-                            state.horizontalPreviewSpanSize - 1
+                        Intent.OnHorizontalCountChanged(
+                            state.previewSettings.horizontalCount - 1
                         )
                     )
                 }) {
@@ -115,11 +116,11 @@ fun PreviewSettingsSection(
                         contentDescription = ""
                     )
                 }
-                Text("${state.horizontalPreviewSpanSize}")
+                Text("${state.previewSettings.horizontalCount}")
                 IconButton(onClick = {
                     dispatchIntent(
-                        Intent.OnHorizontalPreviewSpanSizeChanged(
-                            state.horizontalPreviewSpanSize + 1
+                        Intent.OnHorizontalCountChanged(
+                            state.previewSettings.horizontalCount + 1
                         )
                     )
                 }) {
@@ -141,39 +142,39 @@ fun PreviewSettingsSection(
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 data class QualityView(
-                    val quality: Settings.Quality,
+                    val quality: PreviewSettings.Quality,
                     val icon: DrawableResource,
                     val iconFilled: DrawableResource
                 )
                 listOf(
                     QualityView(
-                        Settings.Quality.HD,
+                        PreviewSettings.Quality.HD,
                         Res.drawable.ic_quality_hd,
                         Res.drawable.ic_quality_hd_filled
                     ),
                     QualityView(
-                        Settings.Quality.FULL_HD,
+                        PreviewSettings.Quality.FULL_HD,
                         Res.drawable.ic_quality_full_hd,
                         Res.drawable.ic_quality_full_hd_filled
                     ),
                     QualityView(
-                        Settings.Quality.TWO_K,
+                        PreviewSettings.Quality.TWO_K,
                         Res.drawable.ic_quality_2k,
                         Res.drawable.ic_quality_2k_filled
                     ),
                     QualityView(
-                        Settings.Quality.FOUR_K,
+                        PreviewSettings.Quality.FOUR_K,
                         Res.drawable.ic_quality_4k,
                         Res.drawable.ic_quality_4k_filled
                     )
                 ).forEach {
                     IconButton(onClick = {
-                        if (it.quality == state.quality) return@IconButton
+                        if (it.quality == state.previewSettings.quality) return@IconButton
                         dispatchIntent(Intent.OnQualityChanged(it.quality))
                     }) {
                         Icon(
                             painterResource(
-                                if (it.quality == state.quality) {
+                                if (it.quality == state.previewSettings.quality) {
                                     it.iconFilled
                                 } else {
                                     it.icon

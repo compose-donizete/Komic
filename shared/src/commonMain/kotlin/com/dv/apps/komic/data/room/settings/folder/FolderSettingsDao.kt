@@ -7,13 +7,13 @@ import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FolderDao {
+interface FolderSettingsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(item: FolderEntity)
+    suspend fun insert(item: FolderSettingsEntity)
 
-    @Query("SELECT * FROM folders")
-    fun get(): Flow<List<FolderEntity>>
+    @Query("SELECT * FROM folder")
+    fun get(): Flow<List<FolderSettingsEntity>>
 
-    @Query("DELETE FROM folders WHERE path = :path")
+    @Query("DELETE FROM folder WHERE path = :path")
     suspend fun delete(path: String)
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dv.apps.komic.KomicTheme
 import com.dv.apps.komic.LocalFolderPicker
+import com.dv.apps.komic.domain.model.FolderSettings
 import com.dv.apps.komic.feature.settings.SettingsSection
 import komic.shared.generated.resources.Res
 import komic.shared.generated.resources.ic_folder_add
@@ -67,14 +68,16 @@ fun FolderSourceSettingsSection(
             }
         }
 
-        if (state.selectedFolders.isNotEmpty()) {
-            HorizontalDivider(
-                Modifier.padding(horizontal = 8.dp)
-            )
+        with(state.folderSettings) {
+            if (paths.isNotEmpty()) {
+                HorizontalDivider(
+                    Modifier.padding(horizontal = 8.dp)
+                )
 
-            Column(Modifier.padding(vertical = 8.dp)) {
-                for (folder in state.selectedFolders) {
-                    Text(folder)
+                Column(Modifier.padding(vertical = 8.dp)) {
+                    for (path in paths) {
+                        Text(path)
+                    }
                 }
             }
         }
@@ -88,9 +91,11 @@ private fun FolderScreenPreview1() {
         SettingsSection {
             FolderSourceSettingsSection(
                 state = State(
-                    selectedFolders = List(4) {
-                        "/root/sdcard:folder/$it"
-                    }
+                    folderSettings = FolderSettings(
+                        List(4) {
+                            "/root/sdcard:folder/$it"
+                        }
+                    )
                 )
             )
         }
@@ -104,7 +109,7 @@ private fun FolderScreenPreview2() {
         SettingsSection {
             FolderSourceSettingsSection(
                 state = State(
-                    selectedFolders = emptyList()
+                    folderSettings = FolderSettings()
                 )
             )
         }

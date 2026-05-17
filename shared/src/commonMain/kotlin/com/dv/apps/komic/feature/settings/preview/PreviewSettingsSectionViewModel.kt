@@ -2,46 +2,45 @@ package com.dv.apps.komic.feature.settings.preview
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.dv.apps.komic.domain.model.PreviewSettings
+import com.dv.apps.komic.domain.repository.PreviewSettingsRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class State(
-    val verticalPreviewSpanSize: Int = 0,
-    val horizontalPreviewSpanSize: Int = 0,
-    val quality: Settings.Quality = Settings.Quality.HD
+    val previewSettings: PreviewSettings = PreviewSettings(4, 4, PreviewSettings.Quality.HD)
 )
 
 sealed interface Intent {
-    data class OnVerticalPreviewSpanSizeChanged(val size: Int) : Intent
-    data class OnHorizontalPreviewSpanSizeChanged(val size: Int) : Intent
-    data class OnQualityChanged(val quality: Settings.Quality) : Intent
+    data class OnVerticalCountChanged(val size: Int) : Intent
+    data class OnHorizontalCountChanged(val size: Int) : Intent
+    data class OnQualityChanged(val quality: PreviewSettings.Quality) : Intent
 }
 
-object Settings {
-    enum class Quality {
-        HD,
-        FULL_HD,
-        TWO_K,
-        FOUR_K
-    }
-}
-
-class PreviewSettingsSectionViewModel : ViewModel() {
-    val state = MutableStateFlow(State())
+class PreviewSettingsSectionViewModel(
+    private val previewSettingsRepository: PreviewSettingsRepository
+) : ViewModel() {
+    val state = previewSettingsRepository.get().map(
+        ::State
+    ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), State())
 
     fun handleIntent(intent: Intent) = viewModelScope.launch {
         when (intent) {
-            is Intent.OnVerticalPreviewSpanSizeChanged -> {
-
+            is Intent.OnVerticalCountChanged if (intent.size > 0)  -> {
+                previewSettingsRepository.set(state.value.previewSettings.copy(verticalCount = intent.size))
             }
 
-            is Intent.OnHorizontalPreviewSpanSizeChanged -> {
-
+            is Intent.OnHorizontalCountChanged if (intent.size > 0) -> {
+                previewSettingsRepository.set(state.value.previewSettings.copy(horizontalCount = intent.size))
             }
 
             is Intent.OnQualityChanged -> {
-
+                previewSettingsRepository.set(state.value.previewSettings.copy(quality = intent.quality))
             }
+
+            else -> Unit
         }
     }
 }

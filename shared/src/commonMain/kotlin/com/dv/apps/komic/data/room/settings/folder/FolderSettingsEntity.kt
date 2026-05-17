@@ -5,12 +5,12 @@ import androidx.room3.Index
 import androidx.room3.PrimaryKey
 
 @Entity(
-    tableName = "folders",
+    tableName = "folder",
     indices = [
         Index(value = ["path"], unique = true),
     ]
 )
-class FolderEntity(
+class FolderSettingsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val path: String
