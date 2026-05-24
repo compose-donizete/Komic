@@ -10,14 +10,17 @@ plugins {
 kotlin {
     target {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
 
     dependencies {
         implementation(projects.shared)
+
         implementation(libs.androidx.activity.compose)
+
         implementation(libs.compose.uiToolingPreview)
+        debugImplementation(libs.compose.uiTooling)
 
         implementation(libs.koin.android)
     }
@@ -45,7 +48,7 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }

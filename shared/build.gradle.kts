@@ -1,7 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
@@ -17,22 +13,7 @@ kotlin {
         freeCompilerArgs.addAll(
             "-Xexpect-actual-classes",
         )
-    }
-
-    androidLibrary {
-        namespace = "com.dv.apps.komic.shared"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_11
-        }
-        androidResources {
-            enable = true
-        }
-        withHostTest {
-            isIncludeAndroidResources = true
-        }
+        languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3
     }
 
     listOf(
@@ -53,32 +34,52 @@ kotlin {
         browser()
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         browser()
     }
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    dependencies {
-        implementation(libs.compose.runtime)
-        implementation(libs.compose.foundation)
-        implementation(libs.compose.material3)
-        implementation(libs.compose.ui)
-        implementation(libs.compose.components.resources)
-        implementation(libs.compose.uiToolingPreview)
-        implementation(libs.androidx.lifecycle.viewmodelCompose)
-        implementation(libs.androidx.lifecycle.runtimeCompose)
-        implementation(libs.kotlinx.datetime)
+    androidLibrary {
+        namespace = "com.dv.apps.komic.shared"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
-        api(platform(libs.koin.bom))
-        api(libs.koin.core)
-        implementation(libs.koin.compose)
-        implementation(libs.koin.compose.viewmodel)
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+        }
+        androidResources {
+            enable = true
+        }
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
+    }
 
-        implementation(libs.navigation3.core)
-        implementation(libs.navigation3.adaptive.navigation.suite)
+    sourceSets {
+        androidMain.dependencies {
+            implementation(libs.compose.uiToolingPreview)
+        }
+        commonMain.dependencies {
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.viewmodelCompose)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
 
-        testImplementation(libs.kotlin.test)
+            api(project.dependencies.platform(libs.koin.bom))
+            api(libs.bundles.koin)
+
+            implementation(libs.bundles.navigation)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+        jsMain.dependencies {
+            implementation(libs.wrappers.browser)
+        }
     }
 }
 
@@ -95,4 +96,8 @@ dependencies {
 
 room3 {
     schemaDirectory("$projectDir/schemas")
+}
+
+koinCompiler {
+    strictSafety = false
 }
