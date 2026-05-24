@@ -1,6 +1,6 @@
+import Shared
 import UIKit
 import SwiftUI
-import Komic
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {

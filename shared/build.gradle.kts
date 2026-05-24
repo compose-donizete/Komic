@@ -40,7 +40,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "Komic"
+            baseName = "Shared"
             isStatic = true
         }
     }
