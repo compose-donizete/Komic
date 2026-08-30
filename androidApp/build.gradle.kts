@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
@@ -8,10 +6,8 @@ plugins {
 }
 
 kotlin {
-    target {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
     }
 
     dependencies {
@@ -50,5 +46,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
+    }
+    buildFeatures {
+        compose = true
     }
 }

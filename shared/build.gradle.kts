@@ -13,7 +13,7 @@ kotlin {
         freeCompilerArgs.addAll(
             "-Xexpect-actual-classes",
         )
-        languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3
+        languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_4
     }
 
     listOf(
@@ -39,7 +39,7 @@ kotlin {
         browser()
     }
 
-    androidLibrary {
+    android {
         namespace = "com.dv.apps.komic.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -53,11 +53,17 @@ kotlin {
         withHostTest {
             isIncludeAndroidResources = true
         }
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
 
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.compose.uiTooling)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -96,8 +102,4 @@ dependencies {
 
 room3 {
     schemaDirectory("$projectDir/schemas")
-}
-
-koinCompiler {
-    strictSafety = false
 }
